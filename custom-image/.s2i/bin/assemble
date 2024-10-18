@@ -12,10 +12,32 @@ debug(){
   "
 }
 
-download_model(){
+download_models(){
+  MODEL_NAME=${1}
+  MODEL_PATH=${2}
+  MODEL_URL=${3}
+
   echo "
-    Example: curl https://modelregistry.local?appid={API key}&model=${MODEL} > /tmp/src/
+    Attempting to download model...
+
+    MODEL_NAME=${MODEL_NAME}
+    MODEL_PATH=${MODEL_PATH}
+    MODEL_URL=${MODEL_URL}
   "
+
+  curl -sL "${MODEL_URL}" \
+    -o "${MODEL_PATH}/${MODEL_NAME}"
+
+}
+
+
+find_metadata(){
+  for file in $(find /tmp/src/ -type f -name "metadata")
+  do
+    . "$file"
+    MODEL_PATH=$(dirname "$file")
+    download_models "${MODEL_NAME}" "${MODEL_PATH}" "${MODEL_URL}"
+  done
 }
 
 assemble_s2i_override(){

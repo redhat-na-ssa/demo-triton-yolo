@@ -16,7 +16,7 @@ models (provide this dir as source / MODEL_REPOSITORY )
 
 ## Usage
 
-NOTE: `oc new-app` commands will error before the image is built; be patient.
+NOTE: `oc new-app` commands will error before the builder image is built; be patient.
 
 ### Build S2I Image
 
@@ -24,11 +24,11 @@ Setup new project
 
 ```sh
 # new project
-NAMESPACE=demo-triton
+NAMESPACE=demo-triton-cli
 
 oc new-project "${NAMESPACE}" \
-  --description "A collection of model serving examples" \
-  --display-name "Demo - Triton s2i"
+  --description "A model serving example" \
+  --display-name "Demo - Triton (cli)"
 ```
 
 Build s2i image in Openshift
@@ -62,7 +62,7 @@ oc new-app \
 Deploy model via s3
 
 ```sh
-APP_NAME=trition-server-s3
+APP_NAME=triton-server-s3
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \

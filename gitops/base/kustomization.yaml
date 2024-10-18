@@ -5,8 +5,8 @@ kind: Kustomization
 labels:
 - includeSelectors: true
   pairs:
-    component: triton
-    app: demo-triton
+    app: triton-server
+    app.kubernetes.io/part-of: triton-server
 
 resources:
 - bc-server.yaml

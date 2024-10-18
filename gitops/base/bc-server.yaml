@@ -5,6 +5,8 @@ metadata:
   name: triton-server-git
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+  labels:
+    build: triton-server
 spec:
   runPolicy: Serial
   source:
