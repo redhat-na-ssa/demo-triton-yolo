@@ -6,6 +6,8 @@ labels:
 - includeSelectors: true
   pairs:
     app: triton-server
+    app.kubernetes.io/component: triton-server
+    app.kubernetes.io/instance: triton-server
     app.kubernetes.io/part-of: triton-server
 
 resources:
