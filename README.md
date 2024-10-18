@@ -1,10 +1,23 @@
 # Customize Nvidia Triton for OpenShift Source to Image (s2i) builds
 
-## Customize s2i via `assemble` or `run`
+## Builder Images
 
-`#TheEasierWay`
+Benefits of Source to Image / Builder Images:
+
+- Use a secure base container image that has all the security policies built in (ex: run as non root user)
+- Only focus on the code you are developing
+- Script in files, not `Dockerfile`
+
+## Source to Image Simplified
+
+Customize Source Builds (s2i) in git via:
+
+- `.s2i/bin/assemble`
+- `.s2i/bin/run`
 
 Use `assemble` when you **DO NOT** need `root` for commands.
+
+Use `run` as your `ENTRYPOINT`
 
 This allows you to customize your container via whatever scripting method you prefer (by default it is `bash`).
 
@@ -12,7 +25,7 @@ Move the mess of `ENTRYPOINT` scripts and `Dockerfile` (non root) `RUN` lines to
 
 Move `ENV` lines to `.s2i/environment`.
 
-See [builder-image/s2i/bin/assemble](builder-image/s2i/bin/assemble)
+See [builder-image/s2i/bin](builder-image/s2i/bin)
 
 ## Links
 
