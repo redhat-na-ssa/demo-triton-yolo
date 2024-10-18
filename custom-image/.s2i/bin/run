@@ -1,0 +1,46 @@
+#!/bin/sh
+# set -e
+
+usage(){
+  "${STI_SCRIPTS_PATH}/usage"
+}
+
+# fallback with sleep to debug your code
+# oc rsh / podman exec -it .. /bin/sh
+run_sleep(){
+  echo "Ponder the universe with infinate sleep..."
+  sleep infinity
+}
+
+# run normal s2i scripts
+run_s2i_default(){
+  /usr/libexec/s2i/run
+}
+
+run_s2i_override(){
+  # want to do something custom before you start
+  echo "
+  These messages brought to you by bash.
+
+  Reticulating splines...
+  "
+}
+
+# unlease the univcorn
+run_uvicorn(){
+    echo "Running uvicorn in developer (reload) mode..."
+    uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+}
+
+if [ "$#" -eq 0 ]; then
+  echo "Running regularaly scheduled program...
+  "
+else
+  exec "$@"
+fi
+
+usage
+
+run_uvicorn
+run_s2i_default
+run_sleep

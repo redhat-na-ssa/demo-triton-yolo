@@ -1,0 +1,3 @@
+# this file allows you to set environment vars via source to image
+
+MODEL=llama3
