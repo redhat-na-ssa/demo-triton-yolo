@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  component: vllm
+
+resources:
+- bc-server.yaml
+- bc-builder.yaml
+- deployment.yaml
+- imagestream.yaml
+- route.yaml
+- service.yaml
