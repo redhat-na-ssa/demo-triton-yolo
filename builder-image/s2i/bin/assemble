@@ -22,11 +22,11 @@ restore_artifacts(){
 }
 
 copy_model(){
-  echo "Moving models to $HOME ..."
-  mv -v /tmp/src/* "$HOME"
+  echo "Moving models to ${HOME} ..."
+  mv -v /tmp/src/* "${HOME}"
 
   # set permissions for any installed artifacts
-  fix-permissions /opt/app-root -P
+  fix-permissions "${APP_ROOT}" -P
 }
 
 usage
