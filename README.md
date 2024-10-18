@@ -2,6 +2,12 @@
 
 This repo shows how to customize a 3rd-party image (Triton) for use in OpenShift with Source Builds
 
+## Quickstart
+
+```sh
+oc apply -k gitops/
+```
+
 ## Why Builder Images
 
 Benefits of Source to Image / Builder Images:
@@ -10,7 +16,7 @@ Benefits of Source to Image / Builder Images:
 - Only focus on the code you are developing
 - Script in files, not `Dockerfile`
 
-### Crash course in Source to Image
+## Crash course in Source to Image
 
 Customize Source Builds (s2i) in git via:
 
@@ -28,7 +34,11 @@ Move the mess of `ENTRYPOINT` scripts and `Dockerfile` (non root) `RUN` lines to
 
 Move `ENV` lines to `.s2i/environment`.
 
-See [example](custom-image/.s2i)
+See [example](example) for more info
+
+## Imperative Steps
+
+- See [`oc` walkthrough](TLDR.md)
 
 ## Links
 
