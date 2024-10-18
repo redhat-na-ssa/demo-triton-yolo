@@ -58,7 +58,7 @@ if __name__ == "__main__":
   file_path = "scratch/fingerprint_real"
   # file_path = input(r"Enter path to test data (ex: scratch/fingerprint_real): ")
   file_list = os.listdir(file_path)
-  
+
   print(file_list)
 
   import skimage
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     img_data = skimage.io.imread(f, as_gray=True)
     img_resized = skimage.transform.resize(img_data, (img_size,img_size))
     logging.debug(f'img_resized.shape = {img_resized.shape}')
-    
+
     try:
       r = make_prediction(img_resized, img_size, model_endpoint)
       logging.debug(f'REST inference response = {r}')

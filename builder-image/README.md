@@ -6,7 +6,7 @@ This project consists of how to create a container with a model for serving on t
 
 Triton model folder structure:
 
-```
+```sh
 models (provide this dir as source / MODEL_REPOSITORY )
 └─ [ model name ]
     └─ 1 (version)
@@ -22,7 +22,7 @@ NOTE: `oc new-app` commands will error before the image is built; be patient.
 
 Setup new project
 
-```
+```sh
 # new project
 NAMESPACE=model-serving
 
@@ -33,7 +33,7 @@ oc new-project "${NAMESPACE}" \
 
 Build s2i image in Openshift
 
-```
+```sh
 oc new-build \
   -n "${NAMESPACE}" \
   https://github.com/codekow/s2i-patch.git \
@@ -46,7 +46,7 @@ oc new-build \
 
 Deploy model via git repo
 
-```
+```sh
 APP_NAME=triton-server-git
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
@@ -61,7 +61,7 @@ oc new-app \
 
 Deploy model via s3
 
-```
+```sh
 APP_NAME=trition-server-s3
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
@@ -82,7 +82,7 @@ oc set env \
 
 Deploy model via local folder
 
-```
+```sh
 APP_NAME=model-server-embedded
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
@@ -97,7 +97,7 @@ oc new-build \
   --context-dir .
 ```
 
-```
+```sh
 # start build from local folder
 oc start-build \
   -n "${NAMESPACE}" \
@@ -106,7 +106,7 @@ oc start-build \
   --from-dir models
 ```
 
-```
+```sh
 # deploy from model image
 oc new-app \
   -n "${NAMESPACE}" \
@@ -122,7 +122,7 @@ oc set env deployment "${APP_NAME}" \
 
 Expose API / model server - Route
 
-```
+```sh
 oc expose service \
   -n "${NAMESPACE}" \
   "${APP_NAME}" \
@@ -133,7 +133,7 @@ oc expose service \
 
 Expose metrics  - Route (optional)
 
-```
+```sh
 oc expose service \
   -n "${NAMESPACE}" \
   "${APP_NAME}" \
@@ -147,7 +147,7 @@ curl -s https://${HOST}/metrics | python -m json.tool
 
 Test model server / metrics
 
-```
+```sh
 APP_NAME=model-server
 
 # test via route
@@ -155,15 +155,16 @@ HOST=$(oc get route "${APP_NAME}" --template={{.spec.host}})
 
 curl -s https://${HOST}/v2 | python -m json.tool
 curl -s https://${HOST}/v2/models/< model name > | python -m json.tool > model.json
+```
 
-
+```sh
 # https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/protocol/extension_model_repository.html#index
 curl -X POST -H "Content-Type: application/json" \
      -d @scripts/model.json \
-     ${HOST}:8000/v2/models/fingerprint/infer | python -m json.tool
+     ${HOST}:8000/v2/models/simple/infer | python -m json.tool
 ```
 
-```
+```sh
 {
   "model_name": "fingerprint",
   "model_version": "1",
@@ -183,7 +184,7 @@ curl -X POST -H "Content-Type: application/json" \
 }
 ```
 
-```
+```sh
 # test via localhost
 oc get pods
 
