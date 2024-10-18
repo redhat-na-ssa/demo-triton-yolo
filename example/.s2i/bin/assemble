@@ -12,7 +12,7 @@ debug(){
   "
 }
 
-download_models(){
+download_model(){
   MODEL_NAME=${1}
   MODEL_PATH=${2}
   MODEL_URL=${3}
@@ -26,24 +26,24 @@ download_models(){
   "
 
   curl -sL "${MODEL_URL}" \
-    -o "${MODEL_PATH}/${MODEL_NAME}"
-
+    -o "${MODEL_PATH}/${MODEL_NAME}" || echo "Download: [FAILED]"
 }
 
+get_models(){
+  FILE_NAME=metadata
 
-find_metadata(){
-  for file in $(find /tmp/src/ -type f -name "metadata")
+  for file in $(find /tmp/src/ -type f -name "${FILENAME}")
   do
     . "$file"
     MODEL_PATH=$(dirname "$file")
-    download_models "${MODEL_NAME}" "${MODEL_PATH}" "${MODEL_URL}"
+    download_model "${MODEL_NAME}" "${MODEL_PATH}" "${MODEL_URL}"
   done
 }
 
 assemble_s2i_override(){
   # handle other dependencies here
   debug
-  download_model
+  get_models
 }
 
 assemble_s2i_default(){
