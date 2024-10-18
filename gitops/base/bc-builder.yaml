@@ -5,6 +5,8 @@ metadata:
   name: triton-builder
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+  labels:
+    build: triton-builder
 spec:
   runPolicy: Serial
   source:

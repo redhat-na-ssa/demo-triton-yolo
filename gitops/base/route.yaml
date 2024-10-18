@@ -15,6 +15,6 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: api
+    name: triton-server
     weight: 100
   wildcardPolicy: None

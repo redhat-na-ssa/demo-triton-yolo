@@ -2,7 +2,7 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: triton-server
+  name: triton-server-git
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:

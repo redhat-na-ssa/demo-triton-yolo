@@ -5,4 +5,5 @@ metadata:
   name: demo-triton
   annotations:
     openshift.io/display-name: "Demo - Triton s2i"
+    openshift.io/description: "A collection of model serving examples"
     argocd.argoproj.io/sync-wave: "0"

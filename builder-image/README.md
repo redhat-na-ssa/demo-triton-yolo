@@ -24,11 +24,11 @@ Setup new project
 
 ```sh
 # new project
-NAMESPACE=model-serving
+NAMESPACE=demo-triton
 
 oc new-project "${NAMESPACE}" \
   --description "A collection of model serving examples" \
-  --display-name "Model Serving"
+  --display-name "Demo - Triton s2i"
 ```
 
 Build s2i image in Openshift
@@ -37,7 +37,7 @@ Build s2i image in Openshift
 oc new-build \
   -n "${NAMESPACE}" \
   https://github.com/codekow/s2i-triton.git#main \
-  --name s2i-triton \
+  --name triton-builder \
   --context-dir /builder-image \
   --strategy docker
 ```
@@ -52,11 +52,11 @@ APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
   -n "${NAMESPACE}" \
-  s2i-triton:latest~https://github.com/codekow/s2i-triton.git#main \
+  triton-builder:latest~https://github.com/codekow/s2i-triton.git#main \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /s2i-triton/models
+  --context-dir /models
 ```
 
 Deploy model via s3
@@ -67,7 +67,7 @@ APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
   -n "${NAMESPACE}" \
-  s2i-triton:latest \
+  triton-builder:latest \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}"
 
@@ -83,7 +83,7 @@ oc set env \
 Deploy model via local folder
 
 ```sh
-APP_NAME=model-server-embedded
+APP_NAME=triton-server-local
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 # configure new build config
@@ -91,7 +91,7 @@ oc new-build \
   -n "${NAMESPACE}" \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
-  --image-stream s2i-triton:latest \
+  --image-stream triton-builder:latest \
   --strategy source \
   --binary \
   --context-dir .
@@ -148,13 +148,14 @@ curl -s https://${HOST}/metrics | python -m json.tool
 Test model server / metrics
 
 ```sh
-APP_NAME=model-server
+APP_NAME=triton-server
 
 # test via route
 HOST=$(oc get route "${APP_NAME}" --template={{.spec.host}})
 
 curl -s https://${HOST}/v2 | python -m json.tool
-curl -s https://${HOST}/v2/models/< model name > | python -m json.tool > model.json
+curl -s -X POST https://${HOST}/v2/repository/index | python -m json.tool
+curl -s https://${HOST}/v2/models/simple | python -m json.tool
 ```
 
 ```sh
@@ -164,23 +165,49 @@ curl -X POST -H "Content-Type: application/json" \
      ${HOST}:8000/v2/models/simple/infer | python -m json.tool
 ```
 
-```sh
+```json
 {
-  "model_name": "fingerprint",
-  "model_version": "1",
-  "outputs": [
-    {
-      "name": "dense_5",
-      "datatype": "FP32",
-      "shape": [
-        1,
-        1
-      ],
-      "data": [
-        1
-      ]
-    }
-  ]
+    "name": "simple",
+    "versions": [
+        "1"
+    ],
+    "platform": "tensorflow_graphdef",
+    "inputs": [
+        {
+            "name": "INPUT0",
+            "datatype": "INT32",
+            "shape": [
+                -1,
+                16
+            ]
+        },
+        {
+            "name": "INPUT1",
+            "datatype": "INT32",
+            "shape": [
+                -1,
+                16
+            ]
+        }
+    ],
+    "outputs": [
+        {
+            "name": "OUTPUT0",
+            "datatype": "INT32",
+            "shape": [
+                -1,
+                16
+            ]
+        },
+        {
+            "name": "OUTPUT1",
+            "datatype": "INT32",
+            "shape": [
+                -1,
+                16
+            ]
+        }
+    ]
 }
 ```
 
@@ -191,8 +218,8 @@ oc get pods
 oc exec deploy/${APP_NAME} -- curl -s localhost:8000/metrics
 oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2
 oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2/repository/index
-oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2/models/< model name >
-oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2/models/< model name >/config
+oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2/models/simple
+oc exec deploy/${APP_NAME} -- curl -s localhost:8000/v2/models/simple/config
 ```
 
 ## Links
