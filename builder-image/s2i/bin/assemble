@@ -1,7 +1,34 @@
 #!/bin/bash
+set -e
 
-echo "Moving models to $HOME ..."
-mv -v /tmp/src/* "$HOME"
+usage(){
+  "${STI_SCRIPTS_PATH}/usage"
+}
 
-# set permissions for any installed artifacts
-fix-permissions /opt/app-root -P
+debug(){
+  echo "
+    This process is runing as $(id)
+    Path: $(pwd)
+  "
+}
+
+restore_artifacts(){
+  # restore artifacts from a previous build (if they exist)
+
+  if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+    echo "---> Restoring build artifacts..."
+    mv /tmp/artifacts/* /opt/app-root/include
+  fi
+}
+
+copy_model(){
+  echo "Moving models to $HOME ..."
+  mv -v /tmp/src/* "$HOME"
+
+  # set permissions for any installed artifacts
+  fix-permissions /opt/app-root -P
+}
+
+usage
+restore_artifacts
+copy_model || debug
