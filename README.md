@@ -1,6 +1,8 @@
-# Customize Nvidia Triton for OpenShift Source to Image (s2i) builds
+# Nvidia Triton for OpenShift Source to Image (s2i)
 
-## Builder Images
+This repo shows how to customize a 3rd-party image (Triton) for use in OpenShift with Source Builds
+
+## Why Builder Images?
 
 Benefits of Source to Image / Builder Images:
 
@@ -8,7 +10,7 @@ Benefits of Source to Image / Builder Images:
 - Only focus on the code you are developing
 - Script in files, not `Dockerfile`
 
-## Source to Image Simplified
+### How to use Source to Image
 
 Customize Source Builds (s2i) in git via:
 
