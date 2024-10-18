@@ -1,2 +1,2 @@
 MODEL_NAME=mobilenet.onnx
-MODEL_URL='https://github.com/onnx/models/raw/main/validated/vision/classification/mobilenet/model/mobilenetv2-10.onnx?download='
+MODEL_URL='https://github.com/onnx/models/raw/main/validated/vision/classification/mobilenet/model/mobilenetv2-12.onnx?download='

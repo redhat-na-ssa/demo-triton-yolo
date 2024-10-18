@@ -1,10 +1,6 @@
 #!/bin/sh
 set -e
 
-usage(){
-  "${STI_SCRIPTS_PATH}/usage"
-}
-
 debug(){
   echo "
     This process is runing as $(id)
@@ -47,11 +43,9 @@ assemble_s2i_override(){
 }
 
 assemble_s2i_default(){
-  echo "Resume default assemble"
+  echo "Resume default assemble..."
   /usr/libexec/s2i/assemble
 }
 
-# usage
 assemble_s2i_override
-# restore_artifacts
 assemble_s2i_default
