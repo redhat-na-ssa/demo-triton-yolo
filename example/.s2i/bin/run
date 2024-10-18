@@ -26,13 +26,6 @@ run_s2i_override(){
   "
 }
 
-if [ "$#" -eq 0 ]; then
-  echo "Running regularaly scheduled program...
-  "
-else
-  exec "$@"
-fi
-
 usage
 
 run_s2i_override

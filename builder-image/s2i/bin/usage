@@ -10,7 +10,7 @@ cat <<USAGE
 This is a S2I triton server image; ${DISTRO} base image:
 
 There are multiple ways to use this image, see documentation at:
-https://github.com/codekow/s2i-triton/tree/main/s2i-triton
+https://github.com/codekow/s2i-triton
 
 The default directory for installing your models sources is:
 '/opt/app-root/src'
@@ -20,5 +20,4 @@ The default directory for installing your models sources is:
 To learn more about S2I visit:
 - https://github.com/openshift/source-to-image
 - https://github.com/sclorg/container-common-scripts
-
 USAGE
