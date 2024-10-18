@@ -21,9 +21,8 @@ restore_artifacts(){
   fi
 }
 
-copy_model(){
-  echo "Moving models to ${HOME}..."
-  mv -v /tmp/src/* "${HOME}"
+fix_perms(){
+  ls -lRh /tmp/src/ "${HOME}"
 
   # set permissions for any installed artifacts
   fix-permissions "${APP_ROOT}" -P
@@ -31,4 +30,4 @@ copy_model(){
 
 usage
 restore_artifacts
-copy_model || debug
+fix_perms || debug
