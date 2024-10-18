@@ -26,12 +26,6 @@ run_s2i_override(){
   "
 }
 
-# unlease the univcorn
-run_uvicorn(){
-    echo "Running uvicorn in developer (reload) mode..."
-    uvicorn main:app --host 0.0.0.0 --port 8080 --reload
-}
-
 if [ "$#" -eq 0 ]; then
   echo "Running regularaly scheduled program...
   "
@@ -41,6 +35,6 @@ fi
 
 usage
 
-run_uvicorn
+run_s2i_override
 run_s2i_default
 run_sleep
