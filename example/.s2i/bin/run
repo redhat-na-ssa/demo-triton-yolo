@@ -14,6 +14,7 @@ run_sleep(){
 
 # run normal s2i scripts
 run_s2i_default(){
+  echo "Resume default run..."
   /usr/libexec/s2i/run
 }
 
