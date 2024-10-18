@@ -59,6 +59,21 @@ oc new-app \
   --context-dir /models
 ```
 
+Deploy model via git repo .s2i
+
+```sh
+APP_NAME=triton-server-custom
+APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
+
+oc new-app \
+  -n "${NAMESPACE}" \
+  triton-builder:latest~https://github.com/codekow/s2i-triton.git#main \
+  --name "${APP_NAME}" \
+  -l "${APP_LABEL}" \
+  --strategy source \
+  --context-dir /example
+```
+
 Deploy model via s3
 
 ```sh
