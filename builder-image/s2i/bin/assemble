@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+
+usage(){
+  "${STI_SCRIPTS_PATH}/usage"
+}
+
+debug(){
+  echo "
+    This process is runing as $(id)
+    Path: $(pwd)
+  "
+}
+
+restore_artifacts(){
+  # restore artifacts from a previous build (if they exist)
+
+  if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+    echo "---> Restoring build artifacts..."
+    mv /tmp/artifacts/* /opt/app-root/include
+  fi
+}
+
+fix_perms(){
+  ls -lRh /tmp/src/ "${HOME}"
+
+  # set permissions for any installed artifacts
+  fix-permissions "${APP_ROOT}" -P
+}
+
+usage
+restore_artifacts
+fix_perms || debug

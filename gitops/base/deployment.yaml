@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: triton-server
+  labels:
+    deployment: triton-server
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name": triton-server:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\ triton-server\")].image","paused":"true"}]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: triton-server
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        deployment: triton-server
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: triton-server
+          image: triton-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: api
+              containerPort: 8000
+              protocol: TCP
+            - name: grpc
+              containerPort: 8001
+              protocol: TCP
+            - name: metrics
+              containerPort: 8002
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '2'
+              memory: 8Gi
+            requests:
+              cpu: '1'
+              memory: 4Gi
+          # startupProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          #     scheme: HTTP
+          #   timeoutSeconds: 1
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   failureThreshold: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          #     scheme: HTTP
+          #   timeoutSeconds: 5
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          #     scheme: HTTP
+          #   timeoutSeconds: 8
+          #   periodSeconds: 100
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          volumeMounts:
+            - name: shm
+              mountPath: /dev/shm
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi

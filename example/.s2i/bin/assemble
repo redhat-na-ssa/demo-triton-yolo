@@ -1,0 +1,51 @@
+#!/bin/sh
+set -e
+
+debug(){
+  echo "
+    This process is runing as $(id)
+    Path: $(pwd)
+  "
+}
+
+download_model(){
+  MODEL_NAME=${1}
+  MODEL_PATH=${2}
+  MODEL_URL=${3}
+
+  echo "
+    Attempting to download model...
+
+    MODEL_NAME=${MODEL_NAME}
+    MODEL_PATH=${MODEL_PATH}
+    MODEL_URL=${MODEL_URL}
+  "
+
+  curl -sL "${MODEL_URL}" \
+    -o "${MODEL_PATH}/${MODEL_NAME}" || echo "Download: [FAILED]"
+}
+
+get_models(){
+  FILENAME=metadata
+
+  for file in $(find /tmp/src/ -type f -name "${FILENAME}")
+  do
+    . "$file"
+    MODEL_PATH=$(dirname "$file")
+    download_model "${MODEL_NAME}" "${MODEL_PATH}" "${MODEL_URL}"
+  done
+}
+
+assemble_s2i_override(){
+  # handle other dependencies here
+  debug
+  get_models
+}
+
+assemble_s2i_default(){
+  echo "Resume default assemble..."
+  /usr/libexec/s2i/assemble
+}
+
+assemble_s2i_override
+assemble_s2i_default
