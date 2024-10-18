@@ -30,7 +30,7 @@ download_model(){
 }
 
 get_models(){
-  FILE_NAME=metadata
+  FILENAME=metadata
 
   for file in $(find /tmp/src/ -type f -name "${FILENAME}")
   do
