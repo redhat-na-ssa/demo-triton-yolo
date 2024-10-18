@@ -36,9 +36,9 @@ Build s2i image in Openshift
 ```sh
 oc new-build \
   -n "${NAMESPACE}" \
-  https://github.com/codekow/s2i-triton.git \
+  https://github.com/codekow/s2i-triton.git#main \
   --name s2i-triton \
-  --context-dir /s2i-triton \
+  --context-dir /builder-image \
   --strategy docker
 ```
 
@@ -52,7 +52,7 @@ APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
   -n "${NAMESPACE}" \
-  s2i-triton:latest~https://github.com/codekow/s2i-triton.git \
+  s2i-triton:latest~https://github.com/codekow/s2i-triton.git#main \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
