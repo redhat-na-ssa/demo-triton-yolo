@@ -12,7 +12,7 @@ spec:
   source:
     git:
       uri: https://github.com/codekow/s2i-triton.git
-      ref: demo-updates
+      ref: main
     contextDir: examples/yolov8
   strategy:
     dockerStrategy:
