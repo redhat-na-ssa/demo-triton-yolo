@@ -34,7 +34,7 @@ Move the mess of `ENTRYPOINT` scripts and `Dockerfile` (non root) `RUN` lines to
 
 Move `ENV` lines to `.s2i/environment`.
 
-See [example](example) for more info
+See [examples](examples) for more info
 
 ## Imperative Steps
 

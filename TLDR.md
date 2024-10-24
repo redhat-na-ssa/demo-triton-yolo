@@ -71,7 +71,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /example
+  --context-dir /examples/mobilenet
 ```
 
 Deploy model via s3
