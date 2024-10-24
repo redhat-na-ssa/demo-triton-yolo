@@ -7,10 +7,10 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: yolov8
+  - name: mobilenet
   - name: latest
     from:
       kind: ImageStreamTag
-      name: triton-server:yolov8
+      name: triton-server:mobilenet
     referencePolicy:
       type: Local
