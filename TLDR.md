@@ -47,7 +47,7 @@ oc new-build \
 Deploy model via git repo
 
 ```sh
-APP_NAME=triton-server-git
+APP_NAME=triton-server-simple
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
@@ -56,7 +56,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /models
+  --context-dir /examples/simple
 ```
 
 Deploy model via git repo .s2i
