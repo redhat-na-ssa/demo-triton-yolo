@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-triton-s2i-source
+  annotations:
+    openshift.io/display-name: "Demo - Triton (Source)"
+    openshift.io/description: |
+      A model serving example that uses source-to-image (s2i) from:
+        - A specialized builder image using a source build from a git repository
+    argocd.argoproj.io/sync-wave: "0"
