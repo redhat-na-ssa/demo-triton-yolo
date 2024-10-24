@@ -1,46 +1,75 @@
 #!/bin/bash
 set -e
 
-usage(){
-  "${STI_SCRIPTS_PATH}/usage"
-}
-
 debug(){
   echo "
     This process is runing as $(id)
     Path: $(pwd)
   "
-  [ -d /tmp/src ] && ls -lRh /tmp/src 
-  ls -lRh "${HOME}"
+  # [ -d /tmp/src ] && ls -lRh /tmp/src 
+  # ls -lRh
+
+  which pip >/dev/null 2>&1 || return 0
+  pip list 
 }
 
-restore_artifacts(){
-  # restore artifacts from a previous build (if they exist)
+build_config_pbtxt(){
+  MODEL_NAME=${1:-yolov8s}
+  IMG_X=${2:-640}
+  IMG_Y=${3}
 
-  if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
-    echo "---> Restoring build artifacts..."
-    mv /tmp/artifacts/* /opt/app-root/include
-  fi
+[ -d "${MODEL_NAME}/1" ] || mkdir -p "${MODEL_NAME}/1"
+
+cat <<CONFIG > "${MODEL_NAME}/config.pbtxt"
+
+name: "${MODEL_NAME}"
+default_model_filename:"${MODEL_NAME}.onnx"
+platform: "onnxruntime_onnx"
+# max_batch_size: 0
+
+input [
+  {
+    name: "images"
+    data_type: TYPE_FP32
+    dims: [ 1, 3, ${IMG_X}, ${IMG_Y:-${IMG_X}} ]
+  }
+]
+output [
+  {
+    name: "output0"
+    data_type: TYPE_FP32
+    dims: [ 1, 84, 8400 ]
+  }
+]
+model_warmup [
+  {
+    name: "zero_input"
+    # batch_size: 1
+    inputs: {
+      key: "images"
+      value: {
+        data_type: TYPE_FP32
+        dims: [1, 3, 640, 640]
+        zero_data: true
+      }
+    }
+  }
+]
+CONFIG
 }
 
-fix_perms(){
-  # set permissions for any installed artifacts
-  fix-permissions "${APP_ROOT}" -P
-}
-
-build_onnx(){
-  MODEL_NAME=${1:-yolo8s.pt}
-
+get_model(){
+  MODEL_NAME=${1:-yolov8s}
+  IMG_X=${2:-640}
+  IMG_Y=${3}
+  
   echo "MODEL_NAME: ${MODEL_NAME}"
+  yolo export model="${MODEL_NAME}.pt" imgsz="${IMG_X},${IMG_Y}" format=onnx
 
-  pip install -U pip
-  pip install -r requirements.txt
-  yolo export model=yolo8s.pt format=onnx
+  build_config_pbtxt "${MODEL_NAME}" "${IMG_X}" "${IMG_Y}"
 
-  # copy model to right location?
+  # copy model
+  mv "${MODEL_NAME}.onnx" "${MODEL_NAME}/1/"
 }
 
-# usage
-# restore_artifacts
-build_onnx || debug
-fix_perms || debug
+get_model         || debug
