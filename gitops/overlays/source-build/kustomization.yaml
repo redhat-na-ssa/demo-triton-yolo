@@ -10,3 +10,6 @@ resources:
 
 components:
 - ../../components/source-build
+
+patches:
+- path: imagestream.yaml
