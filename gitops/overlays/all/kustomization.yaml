@@ -10,7 +10,7 @@ resources:
 
 components:
 - ../../components/docker-build
-- ../../components/docker-source
+- ../../components/source-build
 
 patches:
 - path: imagestream.yaml
