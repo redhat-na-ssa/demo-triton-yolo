@@ -1,7 +1,8 @@
 FROM nvcr.io/nvidia/tritonserver:24.08-py3
 
-ENV STI_SCRIPTS_PATH=/usr/libexec/s2i/
-COPY s2i/bin/ ${STI_SCRIPTS_PATH}
+ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
+COPY s2i/bin/ ${STI_SCRIPTS_PATH}/
+COPY usr/ usr/
 
 # default s2i path
 ENV APP_ROOT=/opt/app-root
@@ -12,12 +13,16 @@ RUN mkdir -p ${APP_ROOT}/{bin,src,include} && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT}
 
-ENV PATH=${APP_ROOT}/bin:${PATH} \
+ENV PATH=${APP_ROOT}/bin:${APP_ROOT}/src/.local/bin:${PATH} \
     HOME=${APP_ROOT}/src
 
 WORKDIR ${HOME}
 
 USER 1001
+
+COPY requirements.txt ${HOME}/
+
+RUN ${STI_SCRIPTS_PATH}/assemble
 
 EXPOSE 8000 8001 8002
 

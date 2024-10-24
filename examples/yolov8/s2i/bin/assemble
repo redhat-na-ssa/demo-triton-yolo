@@ -10,6 +10,8 @@ debug(){
     This process is runing as $(id)
     Path: $(pwd)
   "
+  [ -d /tmp/src ] && ls -lRh /tmp/src 
+  ls -lRh "${HOME}"
 }
 
 restore_artifacts(){
@@ -22,12 +24,23 @@ restore_artifacts(){
 }
 
 fix_perms(){
-  ls -lRh /tmp/src/ "${HOME}"
-
   # set permissions for any installed artifacts
   fix-permissions "${APP_ROOT}" -P
 }
 
-usage
-restore_artifacts
+build_onnx(){
+  MODEL_NAME=${1:-yolo8s.pt}
+
+  echo "MODEL_NAME: ${MODEL_NAME}"
+
+  pip install -U pip
+  pip install -r requirements.txt
+  yolo export model=yolo8s.pt format=onnx
+
+  # copy model to right location?
+}
+
+# usage
+# restore_artifacts
+build_onnx || debug
 fix_perms || debug
