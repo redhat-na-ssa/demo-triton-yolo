@@ -7,3 +7,7 @@ namespace: demo-triton
 resources:
 - ../../base
 - namespace.yaml
+
+components:
+- ../../components/source-build
+- ../../components/docker-build

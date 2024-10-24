@@ -2,32 +2,31 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: triton-builder
+  name: triton-server-git
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   labels:
-    build: triton-builder
+    build: triton-server
 spec:
   runPolicy: Serial
   source:
     git:
       uri: https://github.com/codekow/s2i-triton.git
-      ref: main
-    contextDir: builder-image
+      ref: demo-updates
+    contextDir: models
   strategy:
-    dockerStrategy:
-      # from:
-      #   kind: ImageStreamTag
-      #   name: triton-server:latest
-      dockerfilePath: Dockerfile
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: triton-builder:latest
   output:
     to:
       kind: ImageStreamTag
-      name: triton-builder:latest
+      name: triton-server:git
   triggers:
     - type: ConfigChange
     - type: ImageChange
       imageChange:
         from:
           kind: ImageStreamTag
-          name: triton:latest
+          name: triton-builder:latest
