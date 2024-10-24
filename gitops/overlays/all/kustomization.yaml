@@ -7,3 +7,10 @@ namespace: demo-triton
 resources:
 - ../../base
 - namespace.yaml
+
+components:
+- ../../components/docker-build
+- ../../components/source-build
+
+patches:
+- path: imagestream.yaml

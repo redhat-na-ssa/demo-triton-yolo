@@ -11,8 +11,6 @@ labels:
     app.kubernetes.io/part-of: triton-server
 
 resources:
-- bc-server.yaml
-- bc-builder.yaml
 - deployment.yaml
 - imagestream.yaml
 - route.yaml

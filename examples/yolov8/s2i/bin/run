@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+usage(){
+  "${STI_SCRIPTS_PATH}/usage"
+}
+
+debug(){
+  echo "
+    This process is runing as $(id)
+    Path: $(pwd)
+  "
+}
+
+# fallback with sleep to debug your code
+# oc rsh / podman exec -it .. /bin/sh
+run_sleep(){
+  echo "Ponder the universe with infinate sleep..."
+  sleep infinity
+}
+
+run_entrypoint(){
+  tritonserver \
+    --model-repository=${MODEL_REPOSITORY:-$HOME} \
+    --model-control-mode=poll \
+    --repository-poll-secs=60 || debug
+}
+
+if [ "$#" -eq 0 ]; then
+  echo "Running regularaly scheduled program...
+  "
+else
+  exec "$@"
+fi
+
+run_entrypoint
+run_sleep

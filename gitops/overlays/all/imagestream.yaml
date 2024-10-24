@@ -1,0 +1,16 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: triton-server
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: yolov8
+  - name: latest
+    from:
+      kind: ImageStreamTag
+      name: triton-server:yolov8
+    referencePolicy:
+      type: Local

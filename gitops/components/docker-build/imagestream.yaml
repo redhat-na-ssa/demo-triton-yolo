@@ -1,0 +1,23 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: ultralytics
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: latest-cpu
+    annotations:
+      openshift.io/imported-from: docker.io/ultralytics/ultralytics:latest-cpu
+    from:
+      kind: DockerImage
+      name: docker.io/ultralytics/ultralytics:latest-cpu
+    referencePolicy:
+      type: Local
+  - name: latest
+    from:
+      kind: ImageStreamTag
+      name: ultralytics:latest-cpu
+    referencePolicy:
+      type: Local

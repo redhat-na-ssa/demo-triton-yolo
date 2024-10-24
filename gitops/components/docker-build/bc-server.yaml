@@ -2,28 +2,25 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: triton-builder
+  name: triton-server-yolov8
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   labels:
-    build: triton-builder
+    build: triton-server
 spec:
   runPolicy: Serial
   source:
     git:
       uri: https://github.com/codekow/s2i-triton.git
-      ref: main
-    contextDir: builder-image
+      ref: demo-updates
+    contextDir: examples/yolov8
   strategy:
     dockerStrategy:
-      # from:
-      #   kind: ImageStreamTag
-      #   name: triton-server:latest
       dockerfilePath: Dockerfile
   output:
     to:
       kind: ImageStreamTag
-      name: triton-builder:latest
+      name: triton-server:yolov8
   triggers:
     - type: ConfigChange
     - type: ImageChange
@@ -31,3 +28,8 @@ spec:
         from:
           kind: ImageStreamTag
           name: triton:latest
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: ultralytics:latest

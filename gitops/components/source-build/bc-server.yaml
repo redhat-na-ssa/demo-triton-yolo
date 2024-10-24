@@ -1,0 +1,64 @@
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: triton-server-simple
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    build: triton-server
+spec:
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/codekow/s2i-triton.git
+      ref: demo-updates
+    contextDir: models
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: triton-builder:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: triton-server:simple
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: triton-builder:latest
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: triton-server-mobilenet
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    build: triton-server
+spec:
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/codekow/s2i-triton.git
+      ref: demo-updates
+    contextDir: examples/mobilenet
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: triton-builder:latest
+  output:
+    to:
+      kind: ImageStreamTag
+      name: triton-server:mobilenet
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: triton-builder:latest

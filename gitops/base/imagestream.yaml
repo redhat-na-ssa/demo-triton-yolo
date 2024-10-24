@@ -27,18 +27,6 @@ kind: ImageStream
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-  name: triton-builder
-spec:
-  lookupPolicy:
-    local: true
-  tags:
-  - name: latest
----
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
   name: triton-server
 spec:
   lookupPolicy:
