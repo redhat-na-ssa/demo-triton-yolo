@@ -1,4 +1,4 @@
-# hadolint global ignore=DL3008,SC3009
+# hadolint global ignore=DL3008,SC3009,DL3025
 FROM docker.io/ultralytics/ultralytics:latest-cpu as build
 
 USER 0
@@ -15,9 +15,11 @@ USER 0
 # pip install --no-cache-dir -r requirements.txt
 
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i/
-COPY s2i/bin/ ${STI_SCRIPTS_PATH}
+COPY s2i/bin/ ${STI_SCRIPTS_PATH}/
 
 RUN ${STI_SCRIPTS_PATH}/assemble
+
+USER 1001
 
 FROM nvcr.io/nvidia/tritonserver:24.08-py3 as inference
 
