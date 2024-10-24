@@ -36,7 +36,7 @@ Move `ENV` lines to `.s2i/environment`.
 
 See [examples](examples) for more info
 
-## `oc` CLI Example / Imperative Steps
+## `oc` Example / Imperative Steps
 
 - See [`oc` walkthrough](TLDR.md)
 
