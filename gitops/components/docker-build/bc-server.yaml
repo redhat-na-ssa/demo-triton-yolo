@@ -8,7 +8,7 @@ metadata:
   labels:
     build: triton-server
 spec:
-  runPolicy: Serial
+  runPolicy: SerialLatestOnly
   source:
     git:
       uri: https://github.com/redhat-na-ssa/demo-computer-vision.git
