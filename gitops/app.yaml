@@ -11,7 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: gitops/overlays/default
+    path: gitops
     repoURL: >-
       https://github.com/codekow/s2i-triton
     targetRevision: main
