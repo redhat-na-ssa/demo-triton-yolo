@@ -3,17 +3,6 @@ FROM docker.io/ultralytics/ultralytics:latest-cpu as build
 
 USER 0
 
-# install os dependencies
-# RUN apt-get update && \
-#     apt-get install -y libgl1 && \
-#     apt-get clean && \
-#     rm -rf /var/lib/apt/lists/*
-
-# COPY requirements.txt ${HOME}/
-
-# RUN pip install --no-cache-dir -U pip setuptools wheel && \
-# pip install --no-cache-dir -r requirements.txt
-
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i/
 COPY s2i/bin/ ${STI_SCRIPTS_PATH}/
 
