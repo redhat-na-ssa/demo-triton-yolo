@@ -11,9 +11,9 @@ spec:
   runPolicy: Serial
   source:
     git:
-      uri: https://github.com/codekow/s2i-triton.git
+      uri: https://github.com/redhat-na-ssa/s2i-triton.git
       ref: main
-    contextDir: builder-image
+    contextDir: examples/source-builder/builder-image
   strategy:
     dockerStrategy:
       # from:
