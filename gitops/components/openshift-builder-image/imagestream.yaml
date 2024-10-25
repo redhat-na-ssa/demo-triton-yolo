@@ -1,0 +1,49 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/display-name: Triton
+    argocd.argoproj.io/sync-wave: "1"
+  name: triton
+  namespace: openshift
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: '0.1'
+    annotations:
+      description: |
+        Package models to run on Triton.
+
+        This allows you to embed models in a container image or download at runtime.
+
+        For more information about using this builder image, see the sample repository.
+      iconClass: icon-openshift
+      openshift.io/display-name: Triton (s2i)
+      openshift.io/provider-display-name: Custom
+      sampleRepo: https://github.com/codekow/s2i-triton
+      supports: custom
+      tags: builder,triton
+      version: "0.1"
+    from:
+      kind: ImageStreamTag
+      name: 'triton-builder:latest'
+      namespace: demo-triton
+  - name: latest
+    annotations:
+      description: |
+        Package models to run on Triton.
+
+        This allows you to embed models in a container image or download at runtime.
+
+        For more information about using this builder image, see the sample repository.
+      iconClass: icon-openshift
+      openshift.io/display-name: Triton (s2i) Latest
+      openshift.io/provider-display-name: Custom
+      sampleRepo: https://github.com/codekow/s2i-triton
+      supports: custom
+      tags: builder,triton
+      version: "latest"
+    from:
+      kind: ImageStreamTag
+      name: 'triton:0.1'
