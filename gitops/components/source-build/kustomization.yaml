@@ -6,3 +6,4 @@ resources:
 - bc-server.yaml
 - bc-builder.yaml
 - imagestream.yaml
+- namespace.yaml
