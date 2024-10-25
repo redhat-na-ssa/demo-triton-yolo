@@ -63,13 +63,15 @@ get_model(){
   IMG_X=${2:-640}
   IMG_Y=${3}
   
+  # download model with cli
   echo "MODEL_NAME: ${MODEL_NAME}"
   yolo export model="${MODEL_NAME}.pt" imgsz="${IMG_X},${IMG_Y}" format=onnx
 
+  # create triton config.pbtxt
   build_config_pbtxt "${MODEL_NAME}" "${IMG_X}" "${IMG_Y}"
 
   # copy model
   mv "${MODEL_NAME}.onnx" "${MODEL_NAME}/1/"
 }
 
-get_model         || debug
+get_model || debug
