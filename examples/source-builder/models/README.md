@@ -1,13 +1,13 @@
 # Source to Image - Source Build
 
-This folder can represent a git repo used for a source build.
+Here is a simple way for users to embed models with Triton without having to define a `Dockerfile`.
 
-Here is a simple way to embed models with Triton without having to define a `Dockerfile`.
+This example requires a [source builder image](../builder-image/).
 
-This folder offers two examples to provide a model to a source build:
+This includes the following sources:
 
-- A git repository - **NOT recommended**
-- A local folder you can build into a container - purpose: quick prototyping
+- A git repository - **NOT recommended** (for obvious reasons)
+- A local folder you can build into a container - **purpose: quick prototyping**
 
 ## Folder structure
 

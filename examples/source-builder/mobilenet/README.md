@@ -1,8 +1,14 @@
-# Source to Image Override Scripts
+# Source to Image - Custom Scripts
 
-This folder can represent a git repo used for a source build.
+Here is a simple way for users to embed models with Triton without having to define a `Dockerfile`... But still make customizations via scripts.
 
-Here is a simple way to embed models with Triton without having to define a `Dockerfile`.
+This example requires a [source builder image](../builder-image/).
+
+The following files are used for scripting:
+
+- `assemble` - defines what happens during a source build process
+- `run` - defines what to run; similar to `CMD` or `ENTRYPOINT`
+- `environment` - sets environment parameters inside the container
 
 ## Folder structure
 
