@@ -1,0 +1,23 @@
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: triton-server
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: '24.08-py3'
+    annotations:
+      openshift.io/imported-from: nvcr.io/nvidia/tritonserver:24.08-py3
+    from:
+      kind: DockerImage
+      name: nvcr.io/nvidia/tritonserver:24.08-py3
+    referencePolicy:
+      type: Local
+  - name: latest
+    from:
+      kind: ImageStreamTag
+      name: triton:24.08-py3
+    referencePolicy:
+      type: Local

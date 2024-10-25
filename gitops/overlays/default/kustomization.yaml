@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
 - ../docker-build
 - ../source-build
+- ../triton-only
