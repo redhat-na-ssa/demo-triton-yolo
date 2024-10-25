@@ -124,7 +124,7 @@ oc start-build \
   -n "${NAMESPACE}" \
   "${APP_NAME}" \
   --follow \
-  --from-dir examples/source-builder/models
+  --from-dir models
 ```
 
 ```sh
