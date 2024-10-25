@@ -1,4 +1,30 @@
-# s2i patch - triton model serving
+# s2i Triton model serving
+
+## Why Builder Images
+
+Benefits of Source to Image / Builder Images:
+
+- Use a secure base container image that has all the security policies built in (ex: run as non root user)
+- Only focus on the code you are developing
+- Script in files, not `Dockerfile`
+
+## Crash course in Source to Image
+
+Customize Source Builds (s2i) in git via:
+
+- `.s2i/bin/assemble`
+- `.s2i/bin/run`
+- `.s2i/environment`
+
+Use `assemble` when you **DO NOT** need `root` for commands.
+
+Use `run` as your `ENTRYPOINT`
+
+This allows you to customize your container via whatever scripting method you prefer (by default it is `bash`).
+
+Move the mess of `ENTRYPOINT` scripts and `Dockerfile` (non root) `RUN` lines to `.s2i/bin/run` or `.s2i/bin/assemble`.
+
+Move `ENV` lines to `.s2i/environment`.
 
 This project consists of how to create a container with a model for serving on triton
 
@@ -38,7 +64,7 @@ oc new-build \
   -n "${NAMESPACE}" \
   https://github.com/codekow/s2i-triton.git#main \
   --name triton-builder \
-  --context-dir /builder-image \
+  --context-dir /examples/source-builder/builder-image \
   --strategy docker
 ```
 
@@ -56,7 +82,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /examples/simple
+  --context-dir /examples/source-builder/models
 ```
 
 Deploy model via git repo .s2i
@@ -71,7 +97,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /examples/mobilenet
+  --context-dir /examples/source-builder/mobilenet
 ```
 
 Deploy model via s3
@@ -118,7 +144,7 @@ oc start-build \
   -n "${NAMESPACE}" \
   "${APP_NAME}" \
   --follow \
-  --from-dir models
+  --from-dir examples/source-builder/models
 ```
 
 ```sh

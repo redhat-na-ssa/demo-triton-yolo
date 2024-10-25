@@ -20,7 +20,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: triton-server:yolov8
+      name: triton-server:latest
   triggers:
     - type: ConfigChange
     - type: ImageChange
