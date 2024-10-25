@@ -135,7 +135,7 @@ oc new-build \
   --image-stream triton-builder:latest \
   --strategy source \
   --binary \
-  --context-dir .
+  --context-dir models
 ```
 
 ```sh
