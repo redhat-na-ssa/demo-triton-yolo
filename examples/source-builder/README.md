@@ -42,7 +42,7 @@ Build s2i image in Openshift
 ```sh
 oc new-build \
   -n "${NAMESPACE}" \
-  https://github.com/redhat-na-ssa/s2i-triton.git#main \
+  https://github.com/redhat-na-ssa/demo-computer-vision.git#main \
   --name triton-builder \
   --context-dir /examples/source-builder/builder-image \
   --strategy docker
@@ -58,7 +58,7 @@ APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
   -n "${NAMESPACE}" \
-  triton-builder:latest~https://github.com/redhat-na-ssa/s2i-triton.git#main \
+  triton-builder:latest~https://github.com/redhat-na-ssa/demo-computer-vision.git#main \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
@@ -73,7 +73,7 @@ APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 
 oc new-app \
   -n "${NAMESPACE}" \
-  triton-builder:latest~https://github.com/redhat-na-ssa/s2i-triton.git#main \
+  triton-builder:latest~https://github.com/redhat-na-ssa/demo-computer-vision.git#main \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
