@@ -5,11 +5,7 @@ kind: Kustomization
 namespace: demo-triton-docker
 
 resources:
-- ../../base
 - namespace.yaml
 
 components:
 - ../../components/docker-build
-
-# patches:
-# - path: imagestream.yaml

@@ -5,11 +5,7 @@ kind: Kustomization
 namespace: demo-triton-source
 
 resources:
-- ../../base
 - namespace.yaml
 
 components:
 - ../../components/source-build
-
-# patches:
-# - path: imagestream.yaml

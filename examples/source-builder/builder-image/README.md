@@ -64,7 +64,7 @@ oc new-build \
   -n "${NAMESPACE}" \
   https://github.com/codekow/s2i-triton.git#main \
   --name triton-builder \
-  --context-dir /builder-image \
+  --context-dir /examples/source-builder/builder-image \
   --strategy docker
 ```
 
@@ -82,7 +82,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /examples/simple
+  --context-dir /examples/source-builder/models
 ```
 
 Deploy model via git repo .s2i
@@ -97,7 +97,7 @@ oc new-app \
   --name "${APP_NAME}" \
   -l "${APP_LABEL}" \
   --strategy source \
-  --context-dir /examples/mobilenet
+  --context-dir /examples/source-builder/mobilenet
 ```
 
 Deploy model via s3
@@ -144,7 +144,7 @@ oc start-build \
   -n "${NAMESPACE}" \
   "${APP_NAME}" \
   --follow \
-  --from-dir models
+  --from-dir examples/source-builder/models
 ```
 
 ```sh

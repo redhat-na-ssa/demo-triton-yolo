@@ -3,7 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 
 resources:
-- bc-server.yaml
+- ../../base
 - bc-builder.yaml
+- bc-server.yaml
 - imagestream.yaml
 - namespace.yaml

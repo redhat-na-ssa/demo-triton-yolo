@@ -13,7 +13,7 @@ spec:
     git:
       uri: https://github.com/codekow/s2i-triton.git
       ref: main
-    contextDir: models
+    contextDir: examples/source-builder/models
   strategy:
     sourceStrategy:
       from:
@@ -45,7 +45,7 @@ spec:
     git:
       uri: https://github.com/codekow/s2i-triton.git
       ref: main
-    contextDir: examples/mobilenet
+    contextDir: examples/source-builder/mobilenet
   strategy:
     sourceStrategy:
       from:
@@ -54,7 +54,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: triton-server:mobilenet
+      name: triton-server:latest
   triggers:
     - type: ConfigChange
     - type: ImageChange
