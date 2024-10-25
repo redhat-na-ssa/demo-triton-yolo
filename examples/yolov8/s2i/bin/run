@@ -15,7 +15,7 @@ debug(){
 # fallback with sleep to debug your code
 # oc rsh / podman exec -it .. /bin/sh
 run_sleep(){
-  echo "Ponder the universe with infinate sleep..."
+  echo "Ponder the universe with infinite sleep..."
   sleep infinity
 }
 

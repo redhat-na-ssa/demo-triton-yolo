@@ -12,6 +12,11 @@ debug(){
   "
 }
 
+assmeble(){
+  echo "Moving models to $HOME ..."
+  mv -v /tmp/src/* "$HOME"
+}
+
 restore_artifacts(){
   # restore artifacts from a previous build (if they exist)
 
@@ -31,3 +36,4 @@ fix_perms(){
 usage
 restore_artifacts
 fix_perms || debug
+assmeble

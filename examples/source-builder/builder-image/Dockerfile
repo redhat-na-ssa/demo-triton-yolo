@@ -1,7 +1,6 @@
 # hadolint global ignore=SC3009,DL3025
 FROM nvcr.io/nvidia/tritonserver:24.08-py3
 
-
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i/
 COPY s2i/bin/ ${STI_SCRIPTS_PATH}
 COPY usr/ /usr/
