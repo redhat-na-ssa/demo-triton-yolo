@@ -5,9 +5,7 @@ This repo shows how to package a ML model with a Nvidia Triton server container.
 ## Quickstart
 
 > [!NOTE]
-> In this example Triton server is configured to serve models from:
->
-> `/models`
+> In this example Triton server is configured to serve models from:`/models`
 
 ### Run Triton - Use an Init Container to setup model
 
