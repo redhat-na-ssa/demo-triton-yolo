@@ -30,6 +30,11 @@ oc apply -k gitops/overlays/triton-s3
 
 ```sh
 oc apply -k gitops/overlays/triton-only
+```
+
+```sh
+# change project / ns context
+oc project trition-server
 
 # get pod name
 POD=$(oc get pod -l app=triton-server -o custom-columns=POD:.metadata.name --no-headers)
