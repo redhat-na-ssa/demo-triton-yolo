@@ -28,7 +28,6 @@ patches:
               --model-repository=${MODEL_REPOSITORY:-/models} \
               --model-control-mode=poll \
               --repository-poll-secs=60 || run_sleep
-          
   - target:
       kind: Deployment
       name: triton-server
