@@ -4,6 +4,11 @@ This repo shows how to package a ML model with a Nvidia Triton server container.
 
 ## Quickstart
 
+> [!NOTE]
+> In this example Triton server is configured to serve models from:
+>
+> `/models`
+
 ### Run Triton - Use an Init Container to setup model
 
 ```sh
@@ -24,6 +29,8 @@ oc apply -k gitops/overlays/triton-s3
 > [!NOTE]
 > You can copy models from local storage via `oc cp`
 > to a PVC or ephemeral storage
+>
+> models path: `/models`
 
 ```sh
 oc apply -k gitops/overlays/triton-only
