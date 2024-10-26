@@ -18,6 +18,6 @@ spec:
   - name: latest
     from:
       kind: ImageStreamTag
-      name: triton:24.08-py3
+      name: triton-server:24.08-py3
     referencePolicy:
       type: Local
