@@ -4,10 +4,6 @@ This repo shows how to package a ML model with a Nvidia Triton server container.
 
 ## Quickstart
 
-```sh
-oc apply -k gitops/
-```
-
 ### Run Triton - Use an Init Container to setup model
 
 ```sh
@@ -38,6 +34,13 @@ POD=$(oc get pod -l app=triton-server -o custom-columns=POD:.metadata.name --no-
 # copy model into /models
 oc cp examples/source-builder/models/simple $POD:/models/
 ```
+
+### Run Builder Demos
+
+```sh
+oc apply -k gitops/
+```
+
 ## More Info
 
 See [examples](examples) for more details
