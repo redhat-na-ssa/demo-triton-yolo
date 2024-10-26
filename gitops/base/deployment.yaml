@@ -15,7 +15,8 @@ spec:
     matchLabels:
       deployment: triton-server
   strategy:
-    type: RollingUpdate
+    # type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
@@ -73,8 +74,13 @@ spec:
           volumeMounts:
             - name: shm
               mountPath: /dev/shm
+            - name: models
+              mountPath: /models
+              subPath: cache
       volumes:
         - name: shm
           emptyDir:
             medium: Memory
-            sizeLimit: 1Gi
+            sizeLimit: 512Mi
+        - name: models
+          emptyDir: {}

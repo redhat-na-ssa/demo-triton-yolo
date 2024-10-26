@@ -4,6 +4,33 @@ kind: Component
 
 resources:
 - ../../base
+- pvc.yaml
 
 patches:
+  - target:
+      kind: Deployment
+      name: triton-server
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/command
+        value:
+          - /bin/bash
+          - -c
+          - |
+            #!/bin/bash
+
+            tritonserver \
+              --model-repository=/models \
+              --model-control-mode=poll \
+              --repository-poll-secs=60
+  - target:
+      kind: Deployment
+      name: triton-server
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/1
+        value:
+          name: models
+          persistentVolumeClaim:
+            claimName: triton-models-cache
   - path: imagestream.yaml
