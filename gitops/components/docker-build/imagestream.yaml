@@ -8,6 +8,7 @@ spec:
     local: true
   tags:
   - name: latest-cpu
+    scheduled: true
     annotations:
       openshift.io/imported-from: docker.io/ultralytics/ultralytics:latest-cpu
     from:

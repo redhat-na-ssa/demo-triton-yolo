@@ -8,6 +8,7 @@ spec:
     local: true
   tags:
   - name: '24.08-py3'
+    scheduled: true
     annotations:
       openshift.io/imported-from: nvcr.io/nvidia/tritonserver:24.08-py3
     from:

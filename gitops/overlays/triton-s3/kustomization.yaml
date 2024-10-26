@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: demo-triton
 
 resources:
-- ../triton-only
+- ../triton
 - secret.yaml
 
 patches:

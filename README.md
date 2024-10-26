@@ -7,6 +7,27 @@ This repo shows how to package a ML model with a Nvidia Triton server container.
 > [!NOTE]
 > In this example Triton server is configured to serve models from:`/models`
 
+### Run Triton - Polling mode (PVC storage)
+
+> [!NOTE]
+> You can copy models from local storage via `oc cp`
+> to a PVC or ephemeral storage
+
+```sh
+oc apply -k gitops/overlays/triton
+```
+
+```sh
+# change project / ns context
+oc project demo-triton
+
+# get pod name
+POD=$(oc get pod -l app=triton-server -o custom-columns=POD:.metadata.name --no-headers)
+
+# copy model into /models
+oc cp examples/source-builder/models/simple ${POD}:/models/
+```
+
 ### Run Triton - Use an Init Container to setup model
 
 ```sh
@@ -20,27 +41,6 @@ oc apply -k gitops/overlays/triton-init
 
 ```sh
 oc apply -k gitops/overlays/triton-s3
-```
-
-### Run Triton - Polling mode (PVC storage)
-
-> [!NOTE]
-> You can copy models from local storage via `oc cp`
-> to a PVC or ephemeral storage
-
-```sh
-oc apply -k gitops/overlays/triton-only
-```
-
-```sh
-# change project / ns context
-oc project trition-server
-
-# get pod name
-POD=$(oc get pod -l app=triton-server -o custom-columns=POD:.metadata.name --no-headers)
-
-# copy model into /models
-oc cp examples/source-builder/models/simple ${POD}:/models/
 ```
 
 ### Run Builder Demos
