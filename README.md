@@ -27,8 +27,6 @@ oc apply -k gitops/overlays/triton-s3
 > [!NOTE]
 > You can copy models from local storage via `oc cp`
 > to a PVC or ephemeral storage
->
-> models path: `/models`
 
 ```sh
 oc apply -k gitops/overlays/triton-only
@@ -37,7 +35,7 @@ oc apply -k gitops/overlays/triton-only
 POD=$(oc get pod -l app=triton-server -o custom-columns=POD:.metadata.name --no-headers)
 
 # copy model into /models
-oc cp examples/source-builder/models/simple $POD:/models/
+oc cp examples/source-builder/models/simple ${POD}:/models/
 ```
 
 ### Run Builder Demos
