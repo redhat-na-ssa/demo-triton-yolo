@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: demo-triton
+
+resources:
+- ../triton-only
+- secret.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: triton-server
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/envFrom
+        value:
+          - secretRef:
+              name: triton-s3-models
