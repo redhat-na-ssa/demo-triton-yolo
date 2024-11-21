@@ -7,8 +7,7 @@ metadata:
     deployment: triton-server
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    image.openshift.io/triggers: >-
-      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"triton-server:latest","namespace":"demo-triton"},"fieldPath":"spec.template.spec.containers[?(@.name==\"triton-server\")].image","paused":"false"}]'
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"triton-server:latest","namespace":"demo-triton"},"fieldPath":"spec.template.spec.containers[?(@.name==\"triton-server\")].image","paused":"false"}]'
 spec:
   replicas: 1
   selector:
