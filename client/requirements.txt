@@ -1,4 +1,2 @@
-numpy
-requests
-pillow
-scikit-image
+ultralytics
+tritonclient[all]

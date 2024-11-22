@@ -10,3 +10,7 @@ patches:
       kind: Deployment
       name: triton-server
     path: patch-deployment.yaml
+  - target:
+      kind: Deployment
+      name: triton-server
+    path: patch-gpu.yaml

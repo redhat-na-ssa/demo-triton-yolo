@@ -6,6 +6,7 @@ bootstrap/sealed-secrets-secret.yaml
 components/operators/**/charts/
 dictionary.dic
 *.log
+pizza.jpg
 
 # swap files
 *~

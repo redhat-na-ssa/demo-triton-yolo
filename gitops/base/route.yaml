@@ -5,13 +5,11 @@ metadata:
   name: triton-server
   labels:
     deployment: triton-server
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   port:
     targetPort: 8000
   tls:
-    insecureEdgeTerminationPolicy: Redirect
+    insecureEdgeTerminationPolicy: Allow
     termination: edge
   to:
     kind: Service

@@ -26,8 +26,8 @@
             pip list 
           }
 
-          build_config_pbtxt(){
-            MODEL_NAME=${1:-yolov8s}
+          build_config_pbtxt_cpu(){
+            MODEL_NAME=${1:-yolov8n}
             IMG_X=${2:-640}
             IMG_Y=${3}
 
@@ -71,8 +71,44 @@
           CONFIG
           }
 
+          build_config_pbtxt_gpu(){
+            MODEL_NAME=${1:-yolo11n}
+            IMG_X=${2:-640}
+            IMG_Y=${3}
+
+          [ -d "${MODEL_NAME}/1" ] || mkdir -p "${MODEL_NAME}/1"
+
+          cat <<CONFIG > "${MODEL_NAME}/config.pbtxt"
+          name: "${MODEL_NAME}"
+          default_model_filename:"${MODEL_NAME}.onnx"
+          optimization {
+            execution_accelerators {
+              gpu_execution_accelerator {
+                name: "tensorrt"
+                parameters {
+                  key: "precision_mode"
+                  value: "FP16"
+                }
+                parameters {
+                  key: "max_workspace_size_bytes"
+                  value: "3221225472"
+                }
+                parameters {
+                  key: "trt_engine_cache_enable"
+                  value: "1"
+                }
+                parameters {
+                  key: "trt_engine_cache_path"
+                  value: "/models/${MODEL_NAME}/1"
+                }
+              }
+            }
+          }
+          CONFIG
+          }
+
           get_model(){
-            MODEL_NAME=${1:-yolov8s}
+            MODEL_NAME=${1:-yolov8n}
             IMG_X=${2:-640}
             IMG_Y=${3}
             
@@ -81,7 +117,7 @@
             yolo export model="${MODEL_NAME}.pt" imgsz="${IMG_X},${IMG_Y}" format=onnx
 
             # create triton config.pbtxt
-            build_config_pbtxt "${MODEL_NAME}" "${IMG_X}" "${IMG_Y}"
+            build_config_pbtxt_gpu "${MODEL_NAME}" "${IMG_X}" "${IMG_Y}"
 
             # copy model
             mv "${MODEL_NAME}.onnx" "${MODEL_NAME}/1/"
