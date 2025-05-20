@@ -24,7 +24,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: triton-server
-          image: nvcr.io/nvidia/tritonserver:25.04-pyt-python-py3
+          image: nvcr.io/nvidia/tritonserver:25.04-py3
           imagePullPolicy: IfNotPresent
           ports:
             - name: api
