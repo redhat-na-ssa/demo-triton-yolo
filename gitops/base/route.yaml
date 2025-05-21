@@ -18,3 +18,23 @@ spec:
     name: triton-server
     weight: 100
   wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: triton-server-metrics
+  labels:
+    deployment: triton-server
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  port:
+    targetPort: 8002
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: triton-server
+    weight: 100
+  wildcardPolicy: None
