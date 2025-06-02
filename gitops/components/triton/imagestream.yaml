@@ -10,15 +10,15 @@ spec:
   - name: '24.08-py3'
     scheduled: true
     annotations:
-      openshift.io/imported-from: nvcr.io/nvidia/tritonserver:24.08-py3
+      openshift.io/imported-from: nvcr.io/nvidia/tritonserver:25.04-py3
     from:
       kind: DockerImage
-      name: nvcr.io/nvidia/tritonserver:24.08-py3
+      name: nvcr.io/nvidia/tritonserver:25.04-py3
     referencePolicy:
       type: Local
   - name: latest
     from:
       kind: ImageStreamTag
-      name: triton-server:24.08-py3
+      name: triton-server:25.04-py3
     referencePolicy:
       type: Local
