@@ -43,33 +43,6 @@ spec:
             requests:
               cpu: '1'
               memory: 4Gi
-          # startupProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: http
-          #     scheme: HTTP
-          #   timeoutSeconds: 1
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   failureThreshold: 10
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: http
-          #     scheme: HTTP
-          #   timeoutSeconds: 5
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   failureThreshold: 3
-          # livenessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: http
-          #     scheme: HTTP
-          #   timeoutSeconds: 8
-          #   periodSeconds: 100
-          #   successThreshold: 1
-          #   failureThreshold: 3
           volumeMounts:
             - name: shm
               mountPath: /dev/shm
